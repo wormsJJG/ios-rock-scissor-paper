@@ -9,11 +9,15 @@ import Foundation
 
 func startGame(){
     print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
-
-    let userInputNumber: Int = Int(readLine() ?? "-1") ?? -1
+    let userInputValue = readLine()
     let computerNumber: Int = Int.random(in: 1...3)
     
-    dicisionWinOrLose(userInputNumber, computerNumber)
+    if let stringValue = userInputValue, let userNumber = Int(stringValue) {
+        dicisionWinOrLose(userNumber, computerNumber)
+    } else {
+        print("잘못된 입력입니다. 다시 시도해주세요.")
+        startGame()
+    }
 }
 
 func dicisionWinOrLose(_ human: Int, _ computer: Int) {
