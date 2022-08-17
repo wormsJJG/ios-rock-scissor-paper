@@ -7,17 +7,28 @@
 
 import Foundation
 
-func startGame(){
+func menu() {
     print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
-    let userInputValue = readLine()
-    let computerNumber: Int = Int.random(in: 1...3)
+}
+
+func userInput() -> Int {
     
-    if let stringValue = userInputValue, let userNumber = Int(stringValue) {
-        dicisionWinOrLose(userNumber, computerNumber)
-    } else {
+    guard let stringValue = readLine(), let userNumber = Int(stringValue) else {
         print("잘못된 입력입니다. 다시 시도해주세요.")
         startGame()
+        
+        return 0
     }
+    
+    return userNumber
+}
+func startGame(){
+    menu()
+    
+    let userNumber = userInput()
+    let computerNumber: Int = Int.random(in: 1...3)
+    
+    dicisionWinOrLose(userNumber, computerNumber)
 }
 
 func dicisionWinOrLose(_ human: Int, _ computer: Int) {
