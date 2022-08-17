@@ -7,6 +7,23 @@
 
 import Foundation
 
+enum rockScissorsPaper {
+ 
+    static let scissors = 1
+    static let rock = 2
+    static let paper = 3
+    
+
+}
+
+enum result: String {
+    case win = "이겼습니다!"
+    case lose = "졌습니다!"
+    case draw = "비겼습니다!"
+}
+
+
+
 func menu() {
     print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
 }
@@ -26,7 +43,7 @@ func startGame(){
     menu()
     
     let userNumber = userInput()
-    let computerNumber: Int = Int.random(in: 1...3)
+    let computerNumber: Int = Int.random(in: rockScissorsPaper.scissors...rockScissorsPaper.paper)
     
     dicisionWinOrLose(userNumber, computerNumber)
 }
