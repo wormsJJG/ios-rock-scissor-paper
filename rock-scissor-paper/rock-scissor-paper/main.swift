@@ -8,12 +8,10 @@
 import Foundation
 
 enum rockScissorsPaper {
- 
+    static let exitGame = 0
     static let scissors = 1
     static let rock = 2
     static let paper = 3
-    
-
 }
 
 enum result: String {
@@ -22,8 +20,6 @@ enum result: String {
     case draw = "비겼습니다!"
 }
 
-
-
 func menu() {
     print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
 }
@@ -31,8 +27,7 @@ func menu() {
 func userInput() -> Int {
     
     guard let stringValue = readLine(), let userNumber = Int(stringValue) else {
-        print("잘못된 입력입니다. 다시 시도해주세요.")
-        startGame()
+        reactInputError()
         
         return 0
     }
@@ -49,19 +44,53 @@ func startGame(){
 }
 
 func dicisionWinOrLose(_ human: Int, _ computer: Int) {
-    if human == computer {
-        print("비겼습니다!")
-        startGame()
-    } else if human == 1 && computer == 2 || human == 2 && computer == 3 || human == 3 && computer == 1 {
-        print("졌습니다!")
-    } else if human == 1 && computer == 3 || human == 2 && computer == 1 || human == 3 && computer == 2 {
-        print("이겼습니다!")
-    } else if human == 0 {
+    switch human {
+    case rockScissorsPaper.exitGame:
         print("게임 종료")
-    } else {
-        print("잘못된 입력입니다. 다시 시도해주세요.")
-        startGame()
+    case rockScissorsPaper.scissors:
+        switch computer {
+        case rockScissorsPaper.scissors:
+            print(result.draw.rawValue)
+            startGame()
+        case rockScissorsPaper.rock:
+            print(result.lose.rawValue)
+        case rockScissorsPaper.paper:
+            print(result.win.rawValue)
+        default:
+            reactInputError()
+        }
+    case rockScissorsPaper.rock:
+        switch computer {
+        case rockScissorsPaper.scissors:
+            print(result.win.rawValue)
+        case rockScissorsPaper.rock:
+            print(result.draw.rawValue)
+            startGame()
+        case rockScissorsPaper.paper:
+            print(result.lose.rawValue)
+        default:
+            reactInputError()
+        }
+    case rockScissorsPaper.paper:
+        switch computer {
+        case rockScissorsPaper.scissors:
+            print(result.lose.rawValue)
+        case rockScissorsPaper.rock:
+            print(result.win.rawValue)
+        case rockScissorsPaper.paper:
+            print(result.draw.rawValue)
+            startGame()
+        default:
+            reactInputError()
+        }
+    default:
+        reactInputError()
     }
+}
+
+func reactInputError() {
+    print("잘못된 입력입니다. 다시 시도해주세요.")
+    startGame()
 }
 
 startGame()
