@@ -11,14 +11,17 @@ enum player: String {
     case user = "사용자"
     case computer = "컴퓨터"
 }
+
+enum Hand {
+    static let exitGame = 0
+    static let scissors = 1
+    static let rock = 2
+    static let paper = 3
+}
+
 class rockScissorPaper {
     
-    enum Hand {
-        static let exitGame = 0
-        static let scissors = 1
-        static let rock = 2
-        static let paper = 3
-    }
+    
 
     enum result: String {
         case win = "이겼습니다!"
@@ -68,6 +71,23 @@ class rockScissorPaper {
     func reactInputError() {
         print("잘못된 입력입니다. 다시 시도해주세요.")
         startGame()
+    }
+}
+
+
+class mukjjibbaGame {
+    func gameResult(_ human: Int, _ computer: Int) -> Bool {
+        switch(human, computer) {
+        case (Hand.scissors, Hand.scissors), (Hand.rock, Hand.rock), (Hand.paper, Hand.paper) :
+            return true
+        case (Hand.scissors, Hand.paper), (Hand.rock, Hand.scissors), (Hand.paper, Hand.rock):
+            return false
+        case (Hand.scissors, Hand.rock), (Hand.rock, Hand.paper), (Hand.paper, Hand.scissors):
+            return false
+        case (_, _):
+            break
+        }
+        return false
     }
 }
 
