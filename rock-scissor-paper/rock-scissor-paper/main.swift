@@ -17,7 +17,7 @@ enum RockScissorsPaper {
     static let paper = 3
 }
 
-enum gameResult: String {
+enum Gameresult: String {
     case win = "이겼습니다!"
     case lose = "졌습니다!"
     case draw = "비겼습니다!"
@@ -54,35 +54,35 @@ func dicisionWinOrLose(_ human: Int, _ computer: Int) {
     case RockScissorsPaper.scissors:
         switch computer {
         case RockScissorsPaper.scissors:
-            print(gameResult.draw.rawValue)
+            print(Gameresult.draw.rawValue)
             startGame()
         case RockScissorsPaper.rock:
-            print(gameResult.lose.rawValue)
+            print(Gameresult.lose.rawValue)
         case RockScissorsPaper.paper:
-            print(gameResult.win.rawValue)
+            print(Gameresult.win.rawValue)
         default:
             reactInputError()
         }
     case RockScissorsPaper.rock:
         switch computer {
         case RockScissorsPaper.scissors:
-            print(gameResult.win.rawValue)
+            print(Gameresult.win.rawValue)
         case RockScissorsPaper.rock:
-            print(gameResult.draw.rawValue)
+            print(Gameresult.draw.rawValue)
             startGame()
         case RockScissorsPaper.paper:
-            print(gameResult.lose.rawValue)
+            print(Gameresult.lose.rawValue)
         default:
             reactInputError()
         }
     case RockScissorsPaper.paper:
         switch computer {
         case RockScissorsPaper.scissors:
-            print(gameResult.lose.rawValue)
+            print(Gameresult.lose.rawValue)
         case RockScissorsPaper.rock:
-            print(gameResult.win.rawValue)
+            print(Gameresult.win.rawValue)
         case RockScissorsPaper.paper:
-            print(gameResult.draw.rawValue)
+            print(Gameresult.draw.rawValue)
             startGame()
         default:
             reactInputError()
