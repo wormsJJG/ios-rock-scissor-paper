@@ -4,113 +4,97 @@
 //
 //  Created by 정재근 on 2022/08/16.
 //
-
 import Foundation
 
-enum player: String {
-    case user = "사용자"
-    case computer = "컴퓨터"
+enum Exitgame {
+    static let exitGame = 0
 }
 
-enum Hand {
-    static let exitGame = 0
+enum RockScissorsPaper {
+    
     static let scissors = 1
     static let rock = 2
     static let paper = 3
 }
 
-class rockScissorPaper {
+enum gameResult: String {
+    case win = "이겼습니다!"
+    case lose = "졌습니다!"
+    case draw = "비겼습니다!"
+}
+
+func printMenu() {
+    print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
+}
+
+func userInput() -> Int {
     
-    
-
-    enum result: String {
-        case win = "이겼습니다!"
-        case lose = "졌습니다!"
-        case draw = "비겼습니다!"
-        case error = "ERROR"
-    }
-
-    func menu() {
-        print("가위(1), 바위(2), 보(3)!<종료 : 0>:", terminator: " ")
-    }
-
-    func userInput() -> Int {
+    guard let stringValue = readLine(), let userNumber = Int(stringValue) else {
+        reactInputError()
         
-        guard let stringValue = readLine(), let userNumber = Int(stringValue) else {
+        return 0
+    }
+    
+    return userNumber
+}
+
+func startGame(){
+    printMenu()
+    
+    let userNumber = userInput()
+    let computerNumber: Int = Int.random(in: RockScissorsPaper.scissors...RockScissorsPaper.paper)
+    
+    dicisionWinOrLose(userNumber, computerNumber)
+}
+
+func dicisionWinOrLose(_ human: Int, _ computer: Int) {
+    switch human {
+    case Exitgame.exitGame:
+        print("게임 종료")
+    case RockScissorsPaper.scissors:
+        switch computer {
+        case RockScissorsPaper.scissors:
+            print(gameResult.draw.rawValue)
+            startGame()
+        case RockScissorsPaper.rock:
+            print(gameResult.lose.rawValue)
+        case RockScissorsPaper.paper:
+            print(gameResult.win.rawValue)
+        default:
             reactInputError()
-            
-            return 0
         }
-        
-        return userNumber
-    }
-    func startGame(){
-        menu()
-        
-        let userNumber = userInput()
-        let computerNumber: Int = Int.random(in: Hand.scissors...Hand.paper)
-        
-        let rockSicissorPaperResult = dicisionWinOrLose(userNumber, computerNumber)
-        print(rockSicissorPaperResult.rawValue)
-    }
-
-    func dicisionWinOrLose(_ human: Int, _ computer: Int) -> result{
-        switch (human, computer) {
-        case (Hand.scissors, Hand.scissors), (Hand.rock, Hand.rock), (Hand.paper, Hand.paper) :
-            return result.draw
-        case (Hand.scissors, Hand.paper), (Hand.rock, Hand.scissors), (Hand.paper, Hand.rock):
-                return result.win
-        case (Hand.scissors, Hand.rock), (Hand.rock, Hand.paper), (Hand.paper, Hand.scissors):
-            return result.lose
-        case (_, _):
-            break
+    case RockScissorsPaper.rock:
+        switch computer {
+        case RockScissorsPaper.scissors:
+            print(gameResult.win.rawValue)
+        case RockScissorsPaper.rock:
+            print(gameResult.draw.rawValue)
+            startGame()
+        case RockScissorsPaper.paper:
+            print(gameResult.lose.rawValue)
+        default:
+            reactInputError()
         }
-        return result.error
-    }
-    
-    func reactInputError() {
-        print("잘못된 입력입니다. 다시 시도해주세요.")
-        startGame()
+    case RockScissorsPaper.paper:
+        switch computer {
+        case RockScissorsPaper.scissors:
+            print(gameResult.lose.rawValue)
+        case RockScissorsPaper.rock:
+            print(gameResult.win.rawValue)
+        case RockScissorsPaper.paper:
+            print(gameResult.draw.rawValue)
+            startGame()
+        default:
+            reactInputError()
+        }
+    default:
+        reactInputError()
     }
 }
 
-
-class mukjjibbaGame {
-    func gameResult(_ human: Int, _ computer: Int) -> Bool {
-        switch(human, computer) {
-        case (Hand.scissors, Hand.scissors), (Hand.rock, Hand.rock), (Hand.paper, Hand.paper) :
-            return true
-        case (Hand.scissors, Hand.paper), (Hand.rock, Hand.scissors), (Hand.paper, Hand.rock):
-            return false
-        case (Hand.scissors, Hand.rock), (Hand.rock, Hand.paper), (Hand.paper, Hand.scissors):
-            return false
-        case (_, _):
-            break
-        }
-        return false
-    }
+func reactInputError() {
+    print("잘못된 입력입니다. 다시 시도해주세요.")
+    startGame()
 }
 
-
-//func mukjiibbaGame(_ winner: player) {
-//    print("[\(winner.rawValue) 턴] 묵(1), 찌(2), 뻐(3)! <종료: 0> :", terminator: " ")
-//    let computerNumber = Int.random(in: Hand.scissors...Hand.paper)
-//    let userNumber = userInput()
-//    let mukgiibbaResult = dicisionWinOrLose(userNumber, computerNumber)
-//    if mukgiibbaResult == result.draw {
-//        print("\(winner.rawValue)의 승리!")
-//    } else if mukgiibbaResult == result.win {
-//
-//    } else if mukgiibbaResult == result.lose {
-//
-//    } else if mukgiibbaResult == result.error {
-//        if winner == player.user {
-//            mukjiibbaGame(player.computer)
-//        } else {
-//            mukjiibbaGame(player.user)
-//        }
-//    }
-//}
-
-
-rockScissorPaper().startGame()
+startGame()
